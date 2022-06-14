@@ -1,8 +1,8 @@
-from dataclasses import dataclass
+# from dataclasses import dataclass
 from datetime import datetime
-from math import fabs
+# from math import fabs
 import random as rd
-from select import select
+# from select import select
 CHAR_NUM = 10
 CHAR_MISSING_NUM = 2
 MAX_LOOP = 3
