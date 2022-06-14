@@ -35,7 +35,10 @@ class Quiz:
                 print(self.incorrect)
 
         print(etime-stime)
-        
-if __name__ == "__main__":
+
+def main():
     quiz = Quiz()
     quiz.startquiz()
+        
+if __name__ == "__main__":
+    main()
