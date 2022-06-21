@@ -92,17 +92,19 @@ numlist = [i for i in range(9,-1,-1)]
 for i in range(10):
     add_button(root,numlist[i],clickbutton,(i//3)+1,i%3)
 
-add_button(root,"+",clickbutton,0,3)
-add_button(root,"-",clickbutton,1,3)
-add_button(root,"*",clickbutton,2,3)
-add_button(root,"/",clickbutton,3,3)
+
+operaters = ["+","-","*","/"]
+for i,o in enumerate(operaters):
+    add_button(root,o,clickbutton,i,3)
+    
 add_button(root,"=",equalbutton,4,3)
-add_button(root,"AC",deletebutton,4,1)
-add_button(root,"C",clearbutton,4,2)
+
+clears = ["AC","C"]
+for i,o in enumerate(clears,1):
+    add_button(root,o,deletebutton,4,i)
+
 add_button(root,"賽",saikoro,0,4)
-# add_button(root,"[",clickbutton,1,4)
-# add_button(root,"]",clickbutton,3,4)
-# add_button(root,",",clickbutton,2,4)
+
 
 
 root.mainloop()
