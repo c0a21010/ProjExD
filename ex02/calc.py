@@ -8,25 +8,25 @@ from matplotlib.pyplot import axes
 
 import numpy as np
 
-my_operator = False
+# my_operator = False
 buttonlist = []
 
-def printwindow():
-    tkm.showwarning("おしたな","おしたな")
+# def printwindow():
+#     tkm.showwarning("おしたな","おしたな")
 
 
 def clickbutton(event):
     btn = event.widget
     txt = btn["text"]
-    my_operator = True
+    # my_operator = True
     entry.insert(tk.END,txt)
 
 def operaterbutton(event):
     btn = event.widget
     txt = btn["text"]
-    if my_operater:
-        entry.insert(tk.END,txt)
-        my_operater = False
+    # if my_operater:
+    #     entry.insert(tk.END,txt)
+    #     # my_operater = False
 
 def equalbutton(event):
     formula = entry.get()
@@ -63,7 +63,7 @@ def clearbutton(event):
     entry.delete(length-1)
 
 def saikoro(event):
-    entry.insert(tk.END,str(rd.randint(1,6)))
+    entry.insert(tk.END,str(rd.randint(1,100)))
 
 def add_button(arg_win,arg_text,bind_func,arg_row,arg_column):
     buttonlist.append(
