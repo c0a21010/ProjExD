@@ -9,25 +9,29 @@ from matplotlib.pyplot import axes
 import numpy as np
 
 # my_operator = False
+#ボタンのリスト
 buttonlist = []
 
 # def printwindow():
 #     tkm.showwarning("おしたな","おしたな")
 
 
+#数字ボタンを押したときの処理
 def clickbutton(event):
     btn = event.widget
     txt = btn["text"]
     # my_operator = True
     entry.insert(tk.END,txt)
 
-def operaterbutton(event):
-    btn = event.widget
-    txt = btn["text"]
-    # if my_operater:
-    #     entry.insert(tk.END,txt)
-    #     # my_operater = False
 
+# def operaterbutton(event):
+#     btn = event.widget
+#     txt = btn["text"]
+#     # if my_operater:
+#     #     entry.insert(tk.END,txt)
+#     #     # my_operater = False
+
+#=ボタンを押したときの処理
 def equalbutton(event):
     formula = entry.get()
     # if formula[0] == "[":
@@ -55,16 +59,21 @@ def equalbutton(event):
     entry.delete(0,tk.END)
     entry.insert(tk.END,str(ans))
 
+#ACボタンを押したときの処理
 def deletebutton(event):
     entry.delete(0,tk.END)
 
+#Cボタンを押したときの処理
 def clearbutton(event):
     length = len(str(entry.get()))
     entry.delete(length-1)
 
+#サイコロボタンを押したときの処理
 def saikoro(event):
     entry.insert(tk.END,str(rd.randint(1,100)))
 
+
+# ボタンを追加する関数
 def add_button(arg_win,arg_text,bind_func,arg_row,arg_column):
     buttonlist.append(
             tk.Button(
@@ -85,24 +94,28 @@ def add_button(arg_win,arg_text,bind_func,arg_row,arg_column):
 root = tk.Tk()
 root.geometry("600x600")
 
+#テキストボックスを表示する
 entry = tk.Entry(justify="right",width=10,font=("Times New Roman",40))
 entry.grid(row=0,column=0,columnspan = 3)
 
+#数字ボタンを表示する
 numlist = [i for i in range(9,-1,-1)]
 for i in range(10):
     add_button(root,numlist[i],clickbutton,(i//3)+1,i%3)
 
-
+#演算子ボタンを表示する
 operaters = ["+","-","*","/"]
 for i,o in enumerate(operaters):
     add_button(root,o,clickbutton,i,3)
-    
+#イコールボタンを表示する
 add_button(root,"=",equalbutton,4,3)
 
+#AC、Cボタンを表示する
 clears = ["AC","C"]
 for i,o in enumerate(clears,1):
     add_button(root,o,deletebutton,4,i)
 
+#賽ボタンを表示する
 add_button(root,"賽",saikoro,0,4)
 
 
