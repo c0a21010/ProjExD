@@ -9,7 +9,9 @@ class Application(tk.Frame):
 
         self.master.geometry()
 
-        self.key = ""
+        # self.key = ""
+        global key
+        key = ""
 
 
         self.canvas = tk.Canvas(
@@ -28,6 +30,8 @@ class Application(tk.Frame):
         self.canvas.create_image(cx,cy,image=self.kokaton,tag="kokaton")
 
         self.canvas.pack()
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
