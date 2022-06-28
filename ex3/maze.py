@@ -32,9 +32,14 @@ class Application(tk.Frame):
         self.canvas.pack()
 
         self.master.bind("<KeyPress>", self.key_down)
+        self.master.bind("<KeyRelease>", self.key_down)
 
-    def key_down(event):
+    def key_down(self,event):
         key = event.keysym
+
+    def key_up(self,event):
+        global key
+        key = ""
 
 if __name__ == "__main__":
     root = tk.Tk()
