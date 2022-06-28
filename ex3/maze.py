@@ -1,17 +1,19 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
+import tkinter.font as tfont
 
 from matplotlib import image, widgets
-from numpy import imag
+from numpy import block, imag
 
 import maze_maker
 
-global key, cx, cy, mx, my
+global key, cx, cy, mx, my, my_block
 key = ""
 cx = 150
 cy = 150
 mx = 1
 my = 1
+my_block = 0
 
 class Application(tk.Frame):
     def __init__(self,master) -> None:
@@ -34,6 +36,8 @@ class Application(tk.Frame):
 
         maze_maker.show_maze(self.canvas,self.mazelist)
 
+        self.canvas.create_rectangle(100,100,200,200,fill="red")
+        self.canvas.create_rectangle(1300,700,1400,800,fill="blue")
 
         self.kokaton = tk.PhotoImage(file="ex3/5.png")
 
@@ -101,10 +105,29 @@ class Application(tk.Frame):
                 cy = mx_my.imag*100+50
 
                 self.canvas.coords("kokaton",cx,cy)
+            
+            else:
+                self.dig(next.real,next.imag)
 
         
 
         self.master.after(100,self.main_proc)
+
+
+
+    def dig(self,arg_x,arg_y):
+        global my_block
+        x = int(arg_x)
+        y = int(arg_y)
+
+        print(x,y)
+
+        if self.mazelist[y][x] == 1:
+            self.mazelist[y][x] = 0
+            new_zimen = self.canvas.create_rectangle(x*100,y*100,x*100+100,y*100+100,fill="green")
+            self.canvas.lift("kokaton",new_zimen)
+
+            my_block += 1
 
 if __name__ == "__main__":
     root = tk.Tk()
