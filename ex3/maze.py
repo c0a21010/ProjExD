@@ -4,6 +4,8 @@ import tkinter.messagebox as tkm
 from matplotlib import image, widgets
 from numpy import imag
 
+import maze_maker
+
 global key, cx, cy
 key = ""
 cx = 300
