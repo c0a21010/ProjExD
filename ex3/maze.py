@@ -17,15 +17,19 @@ class Application(tk.Frame):
 
         self.master.geometry()
 
+
         # self.key = ""
-
-
         self.canvas = tk.Canvas(
             self.master,
             width = 1500,
             height = 900,
             bg="black"
         )
+
+        mazelist = maze_maker.make_maze(15,9)
+
+        maze_maker.show_maze(self.canvas,mazelist)
+
 
         self.kokaton = tk.PhotoImage(file="5.png")
 
@@ -35,8 +39,6 @@ class Application(tk.Frame):
 
         self.master.bind("<KeyPress>", self.key_down)
         self.master.bind("<KeyRelease>", self.key_up)
-
-        mazelist = maze_maker.make_maze(15,9)
 
         self.main_proc()
 
