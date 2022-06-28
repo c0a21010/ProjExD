@@ -33,7 +33,7 @@ class Application(tk.Frame):
 
         self.mazelist = maze_maker.make_maze(15,9)
 
-        print(self.mazelist)
+        # print(self.mazelist)
 
         maze_maker.show_maze(self.canvas,self.mazelist)
 
@@ -54,7 +54,7 @@ class Application(tk.Frame):
     def key_down(self,event):
         global key
         key = event.keysym
-        # print(key)
+        # # print(key)
 
     def key_up(self,event):
         global key
@@ -83,17 +83,17 @@ class Application(tk.Frame):
 
         if key in move.keys():
 
-            # print(key)
+            # # print(key)
 
             next = mx_my + move[key]
 
-            print(next,mx_my)
-            print(next.real
-            ,next.imag)
-            # print(self.mazelist[int(next.real)][int(next.imag)])
+            # print(next,mx_my)
+            # print(next.real
+            # ,next.imag)
+            # # print(self.mazelist[int(next.real)][int(next.imag)])
 
             if mode > 0:
-                print("zikkou")
+                # print("zikkou")
                 self.set_block(next.real,next.imag)
 
             elif self.mazelist[int(next.imag)][int(next.real)] == 0:
@@ -103,9 +103,9 @@ class Application(tk.Frame):
                 mx = mx_my.real
                 my = mx_my.imag
 
-                # print(move[key])
+                # # print(move[key])
 
-                # print(cx_cy)
+                # # print(cx_cy)
 
                 cx = mx_my.real*100+50
                 cy = mx_my.imag*100+50
@@ -129,7 +129,7 @@ class Application(tk.Frame):
         x = int(arg_x)
         y = int(arg_y)
 
-        print(x,y)
+        # print(x,y)
 
         if self.mazelist[y][x] == 1:
             self.mazelist[y][x] = 0
