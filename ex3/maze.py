@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.messagebox as tkm
 
-from matplotlib import widgets
+from matplotlib import image, widgets
 
 class Application(tk.Frame):
     def __init__(self,master) -> None:
@@ -9,15 +9,25 @@ class Application(tk.Frame):
 
         self.master.geometry()
 
+        self.key = ""
 
-        canvas = tk.Canvas(
+
+        self.canvas = tk.Canvas(
             self.master,
             width = 1500,
             height = 900,
             bg="black"
         )
 
-        canvas.pack()
+        self.kokaton = tk.PhotoImage(file="5.png")
+
+        global cx, cy
+        cx = 300
+        cy = 400
+
+        self.canvas.create_image(cx,cy,image=self.kokaton,tag="kokaton")
+
+        self.canvas.pack()
 
 if __name__ == "__main__":
     root = tk.Tk()
