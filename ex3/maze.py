@@ -7,13 +7,14 @@ from numpy import block, imag
 
 import maze_maker
 
-global key, cx, cy, mx, my, my_block
+global key, cx, cy, mx, my, my_block, mode
 key = ""
 cx = 150
 cy = 150
 mx = 1
 my = 1
 my_block = 0
+mode = -1
 
 class Application(tk.Frame):
     def __init__(self,master) -> None:
@@ -74,10 +75,11 @@ class Application(tk.Frame):
             "Right":1,
         }
 
-        global cx, cy, mx, my
+        global cx, cy, mx, my,mode,myblock
 
         cx_cy = complex(cx,cy)
         mx_my = complex(mx,my)
+
 
         if key in move.keys():
 
@@ -90,7 +92,11 @@ class Application(tk.Frame):
             ,next.imag)
             # print(self.mazelist[int(next.real)][int(next.imag)])
 
-            if self.mazelist[int(next.imag)][int(next.real)] == 0:
+            if mode > 0:
+                print("zikkou")
+                self.set_block(next.real,next.imag)
+
+            elif self.mazelist[int(next.imag)][int(next.real)] == 0:
 
                 mx_my = next
 
@@ -109,7 +115,10 @@ class Application(tk.Frame):
             else:
                 self.dig(next.real,next.imag)
 
-        
+
+        if key == "Shift_L":
+            mode *= -1
+
 
         self.master.after(100,self.main_proc)
 
@@ -128,6 +137,20 @@ class Application(tk.Frame):
             self.canvas.lift("kokaton",new_zimen)
 
             my_block += 1
+
+    def set_block(self,arg_x,arg_y):
+        global my_block
+
+        x = int(arg_x)
+        y = int(arg_y)
+
+        if self.mazelist[y][x] == 0:
+            self.mazelist[y][x] = 1
+            new_zimen = self.canvas.create_rectangle(x*100,y*100,x*100+100,y*100+100,fill="blue")
+            self.canvas.lift("kokaton",new_zimen)
+
+            my_block += 1
+
 
 if __name__ == "__main__":
     root = tk.Tk()
