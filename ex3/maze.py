@@ -6,10 +6,12 @@ from numpy import imag
 
 import maze_maker
 
-global key, cx, cy
+global key, cx, cy, mx, my
 key = ""
 cx = 300
 cy = 400
+mx = 1
+my = 1
 
 class Application(tk.Frame):
     def __init__(self,master) -> None:
@@ -52,29 +54,40 @@ class Application(tk.Frame):
         key = ""
 
     def main_proc(self):
+        # move = {
+        #     "Up":-20j,
+        #     "Down":20j,
+        #     "Left":-20,
+        #     "Right":20,
+        # }
+
         move = {
-            "Up":-20j,
-            "Down":20j,
-            "Left":-20,
-            "Right":20,
+            "Up":-1j,
+            "Down":1j,
+            "Left":-1,
+            "Right":1,
         }
 
-        global cx, cy
+        global cx, cy, mx, my
 
         cx_cy = complex(cx,cy)
+        mx_my = complex(mx,my)
 
         if key in move.keys():
 
             # print(key)
 
-            cx_cy += move[key]
+            mx_my += move[key]
+
+            mx = mx_my.real
+            my = mx_my.imag
 
             # print(move[key])
 
             # print(cx_cy)
 
-            cx = cx_cy.real
-            cy = cx_cy.imag
+            cx = mx_my.real*100+50
+            cy = mx_my.imag*100+50
 
             self.canvas.coords("kokaton",cx,cy)
 
