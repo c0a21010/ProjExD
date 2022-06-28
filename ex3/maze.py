@@ -8,8 +8,8 @@ import maze_maker
 
 global key, cx, cy, mx, my
 key = ""
-cx = 300
-cy = 400
+cx = 150
+cy = 150
 mx = 1
 my = 1
 
@@ -28,12 +28,14 @@ class Application(tk.Frame):
             bg="black"
         )
 
-        mazelist = maze_maker.make_maze(15,9)
+        self.mazelist = maze_maker.make_maze(15,9)
 
-        maze_maker.show_maze(self.canvas,mazelist)
+        print(self.mazelist)
+
+        maze_maker.show_maze(self.canvas,self.mazelist)
 
 
-        self.kokaton = tk.PhotoImage(file="5.png")
+        self.kokaton = tk.PhotoImage(file="ex3/5.png")
 
         self.canvas.create_image(cx,cy,image=self.kokaton,tag="kokaton")
 
@@ -77,19 +79,28 @@ class Application(tk.Frame):
 
             # print(key)
 
-            mx_my += move[key]
+            next = mx_my + move[key]
 
-            mx = mx_my.real
-            my = mx_my.imag
+            print(next,mx_my)
+            print(next.real
+            ,next.imag)
+            # print(self.mazelist[int(next.real)][int(next.imag)])
 
-            # print(move[key])
+            if self.mazelist[int(next.imag)][int(next.real)] == 0:
 
-            # print(cx_cy)
+                mx_my = next
 
-            cx = mx_my.real*100+50
-            cy = mx_my.imag*100+50
+                mx = mx_my.real
+                my = mx_my.imag
 
-            self.canvas.coords("kokaton",cx,cy)
+                # print(move[key])
+
+                # print(cx_cy)
+
+                cx = mx_my.real*100+50
+                cy = mx_my.imag*100+50
+
+                self.canvas.coords("kokaton",cx,cy)
 
         
 
