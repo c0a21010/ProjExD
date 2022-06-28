@@ -36,6 +36,8 @@ class Application(tk.Frame):
         self.master.bind("<KeyPress>", self.key_down)
         self.master.bind("<KeyRelease>", self.key_up)
 
+        mazelist = maze_maker.make_maze(15,9)
+
         self.main_proc()
 
     def key_down(self,event):
