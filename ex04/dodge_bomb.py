@@ -12,11 +12,17 @@ def main():
         "/home/koya/MEGA/講義資料/2_前期/プロジェクト演習/3クール/ProjExD/ex04/pg_bg.jpg"
     )
     bg_rect = bg_img.get_rect()
-    screen.blit(bg_img, bg_rect)
 
-    pg.display.update()
+    while True:
+        screen.blit(bg_img, bg_rect)
 
-    clock.tick(0.5)
+        pg.display.update()
+
+        clock.tick(1000)
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                return
 
 
 if __name__ == "__main__":
