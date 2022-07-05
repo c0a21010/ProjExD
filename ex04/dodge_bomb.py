@@ -9,6 +9,7 @@ def main():
 
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((1600, 900))
+    screen_rct = screen.get_rect()
     bg_img = pg.image.load(
         "/home/koya/MEGA/講義資料/2_前期/プロジェクト演習/3クール/ProjExD/ex04/pg_bg.jpg"
     )
@@ -26,8 +27,8 @@ def main():
     bomb.set_colorkey((0, 0, 0))
     bomb_rect = bomb.get_rect()
 
-    x = rd.randint(0, 1600)
-    y = rd.randint(0, 900)
+    x = rd.randint(0, screen_rct.width)
+    y = rd.randint(0, screen_rct.height)
 
     dx = 1
     dy = 1
@@ -45,9 +46,9 @@ def main():
         if y < 0 or 900 < y:
             dy *= -1
 
-        print(bomb_rect.centerx, bomb_rect.centery)
+        # print(bomb_rect.centerx, bomb_rect.centery)
         key_status = pg.key.get_pressed()
-        print(key_status[pg.K_UP])
+        # print(key_status[pg.K_UP])
         if key_status[pg.K_UP]:
             kokaton_rect.move_ip(0, -1)
         if key_status[pg.K_DOWN]:
