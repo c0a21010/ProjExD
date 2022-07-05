@@ -10,14 +10,10 @@ def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((1600, 900))
     screen_rct = screen.get_rect()
-    bg_img = pg.image.load(
-        "/home/koya/MEGA/講義資料/2_前期/プロジェクト演習/3クール/ProjExD/ex04/pg_bg.jpg"
-    )
+    bg_img = pg.image.load("pg_bg.jpg")
     bg_rect = bg_img.get_rect()
 
-    kokaton_img = pg.image.load(
-        "/home/koya/MEGA/講義資料/2_前期/プロジェクト演習/3クール/ProjExD/ex04/6.png"
-    )
+    kokaton_img = pg.image.load("6.png")
     kokaton_img = pg.transform.rotozoom(kokaton_img, 0, 2.0)
 
     kokaton_rect = kokaton_img.get_rect()
