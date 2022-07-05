@@ -31,6 +31,8 @@ def main():
     pg.draw.circle(bomb, (255, 0, 0), (10, 10), 10)
 
     while True:
+        x += 1
+        y += 1
         screen.blit(bg_img, bg_rect)
         screen.blit(kokaton_img, kokaton_rect)
         screen.blit(bomb, (x, y))
