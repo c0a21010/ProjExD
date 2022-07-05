@@ -23,8 +23,11 @@ def main():
     bomb.set_colorkey((0, 0, 0))
     bomb_rect = bomb.get_rect()
 
-    x = rd.randint(0, screen_rct.width)
-    y = rd.randint(0, screen_rct.height)
+    width = screen_rct.width
+    height = screen_rct.height
+
+    x = rd.randint(0, width)
+    y = rd.randint(0, height)
 
     dx = 1
     dy = 1
@@ -37,9 +40,9 @@ def main():
         screen.blit(kokaton_img, kokaton_rect)
         screen.blit(bomb, bomb_rect)
 
-        if x < 0 or 1600 < x:
+        if x < 0 or width < x:
             dx *= -1
-        if y < 0 or 900 < y:
+        if y < 0 or height < y:
             dy *= -1
 
         # print(bomb_rect.centerx, bomb_rect.centery)
