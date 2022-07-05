@@ -28,14 +28,23 @@ def main():
     x = rd.randint(0, 1600)
     y = rd.randint(0, 900)
 
+    dx = 1
+    dy = 1
+
     pg.draw.circle(bomb, (255, 0, 0), (10, 10), 10)
 
     while True:
-        x += 1
-        y += 1
+
         screen.blit(bg_img, bg_rect)
         screen.blit(kokaton_img, kokaton_rect)
         screen.blit(bomb, (x, y))
+
+        if x < 0 or 1600 < x:
+            dx *= -1
+        if y < 0 or 900 < y:
+            dy *= -1
+
+        print(x, y)
 
         key_status = pg.key.get_pressed()
         # print(key_status[pg.K_UP])
@@ -54,7 +63,10 @@ def main():
 
         pg.display.update()
 
-        clock.tick(100)
+        x += dx
+        y += dy
+
+        clock.tick(500)
 
 
 if __name__ == "__main__":
