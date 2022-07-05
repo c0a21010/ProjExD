@@ -24,6 +24,7 @@ def main():
 
     bomb = pg.Surface((20, 20))
     bomb.set_colorkey((0, 0, 0))
+    bomb_rect = bomb.get_rect()
 
     x = rd.randint(0, 1600)
     y = rd.randint(0, 900)
@@ -37,25 +38,27 @@ def main():
 
         screen.blit(bg_img, bg_rect)
         screen.blit(kokaton_img, kokaton_rect)
-        screen.blit(bomb, (x, y))
+        screen.blit(bomb, bomb_rect)
 
         if x < 0 or 1600 < x:
             dx *= -1
         if y < 0 or 900 < y:
             dy *= -1
 
-        print(x, y)
-
+        print(bomb_rect.centerx, bomb_rect.centery)
         key_status = pg.key.get_pressed()
-        # print(key_status[pg.K_UP])
+        print(key_status[pg.K_UP])
         if key_status[pg.K_UP]:
-            kokaton_rect.move_ip(0, -10)
+            kokaton_rect.move_ip(0, -1)
         if key_status[pg.K_DOWN]:
-            kokaton_rect.move_ip(0, 10)
+            kokaton_rect.move_ip(0, 1)
         if key_status[pg.K_RIGHT]:
-            kokaton_rect.move_ip(10, 0)
+            kokaton_rect.move_ip(1, 0)
         if key_status[pg.K_LEFT]:
-            kokaton_rect.move_ip(-10, 0)
+            kokaton_rect.move_ip(-1, 0)
+
+        if kokaton_rect.colliderect(bomb_rect) == True:
+            return
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -65,6 +68,8 @@ def main():
 
         x += dx
         y += dy
+
+        bomb_rect.center = (x, y)
 
         clock.tick(500)
 
