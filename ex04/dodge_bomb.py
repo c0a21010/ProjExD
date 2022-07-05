@@ -13,8 +13,17 @@ def main():
     )
     bg_rect = bg_img.get_rect()
 
+    kokaton_img = pg.image.load(
+        "/home/koya/MEGA/講義資料/2_前期/プロジェクト演習/3クール/ProjExD/ex04/6.png"
+    )
+    kokaton_img = pg.transform.rotozoom(kokaton_img, 0, 2.0)
+
+    kokaton_rect = kokaton_img.get_rect()
+    kokaton_rect.center = 900, 400
+
     while True:
         screen.blit(bg_img, bg_rect)
+        screen.blit(kokaton_img, kokaton_rect)
 
         pg.display.update()
 
