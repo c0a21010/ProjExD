@@ -25,13 +25,24 @@ def main():
         screen.blit(bg_img, bg_rect)
         screen.blit(kokaton_img, kokaton_rect)
 
-        pg.display.update()
-
-        clock.tick(1000)
+        key_status = pg.key.get_pressed()
+        print(key_status[pg.K_UP])
+        if key_status[pg.K_UP]:
+            kokaton_rect.move_ip(0, -10)
+        if key_status[pg.K_DOWN]:
+            kokaton_rect.move_ip(0, 10)
+        if key_status[pg.K_RIGHT]:
+            kokaton_rect.move_ip(10, 0)
+        if key_status[pg.K_LEFT]:
+            kokaton_rect.move_ip(-10, 0)
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 return
+
+        pg.display.update()
+
+        clock.tick(100)
 
 
 if __name__ == "__main__":
