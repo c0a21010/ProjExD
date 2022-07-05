@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+import random as rd
 
 
 def main():
@@ -21,12 +22,21 @@ def main():
     kokaton_rect = kokaton_img.get_rect()
     kokaton_rect.center = 900, 400
 
+    bomb = pg.Surface((20, 20))
+    bomb.set_colorkey((0, 0, 0))
+
+    x = rd.randint(0, 1600)
+    y = rd.randint(0, 900)
+
+    pg.draw.circle(bomb, (255, 0, 0), (10, 10), 10)
+
     while True:
         screen.blit(bg_img, bg_rect)
         screen.blit(kokaton_img, kokaton_rect)
+        screen.blit(bomb, (x, y))
 
         key_status = pg.key.get_pressed()
-        print(key_status[pg.K_UP])
+        # print(key_status[pg.K_UP])
         if key_status[pg.K_UP]:
             kokaton_rect.move_ip(0, -10)
         if key_status[pg.K_DOWN]:
