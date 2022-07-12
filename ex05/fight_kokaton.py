@@ -33,33 +33,33 @@ class Bird:
 
     def update(self, scr):
         key_states = pg.key.get_pressed()  # 辞書
-        if key_states[pg.K_UP] == True:
+        if key_states[pg.K_UP]:
             self.rct.centery -= 1
-        if key_states[pg.K_DOWN] == True:
+        if key_states[pg.K_DOWN]:
             self.rct.centery += 1
-        if key_states[pg.K_LEFT] == True:
+        if key_states[pg.K_LEFT]:
             self.rct.centerx -= 1
-        if key_states[pg.K_RIGHT] == True:
+        if key_states[pg.K_RIGHT]:
             self.rct.centerx += 1
-        if key_states[pg.K_SPACE] == True:  # スペースキーを押したときに
+        if key_states[pg.K_SPACE]:  # スペースキーを押したときに
             self.shield(scr)  # シールドを出す
             self.shield_flag = True  # フラグを使ってダメージがあるかを判定
 
         else:
             self.shield_flag = False
-        if key_states[pg.K_b] == True:
+        if key_states[pg.K_b]:
             self.beam(scr)
         else:
             pass
         # 練習7
         if check_bound(self.rct, scr.rct) != (1, 1):  # 領域外だったら
-            if key_states[pg.K_UP] == True:
+            if key_states[pg.K_UP]:
                 self.rct.centery += 1
-            if key_states[pg.K_DOWN] == True:
+            if key_states[pg.K_DOWN]:
                 self.rct.centery -= 1
-            if key_states[pg.K_LEFT] == True:
+            if key_states[pg.K_LEFT]:
                 self.rct.centerx += 1
-            if key_states[pg.K_RIGHT] == True:
+            if key_states[pg.K_RIGHT]:
                 self.rct.centerx -= 1
         self.blit(scr)
 
