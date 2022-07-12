@@ -1,7 +1,6 @@
 import random
 import sys
 
-import numpy as np
 import pygame as pg
 
 
