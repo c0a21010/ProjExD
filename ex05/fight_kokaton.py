@@ -41,9 +41,9 @@ class Bird:
             self.rct.centerx -= 1
         if key_states[pg.K_RIGHT] == True:
             self.rct.centerx += 1
-        if key_states[pg.K_SPACE] == True:
-            self.shield(scr)
-            self.shield_flag = True
+        if key_states[pg.K_SPACE] == True:  # スペースキーを押したときに
+            self.shield(scr)  # シールドを出す
+            self.shield_flag = True  # フラグを使ってダメージがあるかを判定
 
         else:
             self.shield_flag = False
@@ -63,7 +63,7 @@ class Bird:
                 self.rct.centerx -= 1
         self.blit(scr)
 
-    def shield(self, scr):
+    def shield(self, scr):  # 円を出現させたりしている
 
         self.sld_sfc = pg.Surface((self.size * 100, self.size * 100))
         self.sld_rct = self.sld_sfc.get_rect()
