@@ -2,7 +2,7 @@
 import pygame as pg
 import sys
 import random as rd
-
+import maze_maker 
 # %%
 class Screen:
 
@@ -25,7 +25,7 @@ class Screen:
         self.goal_color = (255,0,0)
 
         """ self.maze_map = [[rd.randint(0,1) for j in range(self.x)] for i in range(self.y)] """
-        self.maze_map = self.make_maze(self.x,self.y)
+        self.maze_map = maze_maker.make_maze(self.x,self.y)
 
     def draw_map(self):
         self.sfc.fill(self.floor_color)
@@ -52,64 +52,11 @@ class Screen:
                         rect=((self.x-2)*(self.tile_length+1),(self.y-2)*(self.tile_length+1),(self.tile_length-1),(self.tile_length-1)),
                         width=0)
 
-    def make_maze(self,yoko, tate):
-        XP = [ 0, 1, 0, -1]
-        YP = [-1, 0, 1,  0]
-
-        maze_lst = []
-        for y in range(tate):
-            maze_lst.append([0]*yoko)
-        for x in range(yoko):
-            maze_lst[0][x] = 1
-            maze_lst[tate-1][x] = 1
-        for y in range(1, tate-1):
-            maze_lst[y][0] = 1
-            maze_lst[y][yoko-1] = 1
-        for y in range(2, tate-2, 2):
-            for x in range(2, yoko-2, 2):
-                maze_lst[y][x] = 1
-        for y in range(2, tate-2, 2):
-            for x in range(2, yoko-2, 2):
-                if x > 2: rnd = rd.randint(0, 2)
-                else:     rnd = rd.randint(0, 3)
-                maze_lst[y+YP[rnd]][x+XP[rnd]] = 1
-
-        return maze_lst
 
     def reset_maze(self):
-        self.maze_map = self.make_maze(self.x,self.y)
+        self.maze_map = maze_maker.make_maze(self.x,self.y)
 
 # %%
-def make_maze(yoko, tate):
-    XP = [ 0, 1, 0, -1]
-    YP = [-1, 0, 1,  0]
-
-    maze_lst = []
-    for y in range(tate):
-        maze_lst.append([0]*yoko)
-    for x in range(yoko):
-        maze_lst[0][x] = 1
-        maze_lst[tate-1][x] = 1
-    for y in range(1, tate-1):
-        maze_lst[y][0] = 1
-        maze_lst[y][yoko-1] = 1
-    for y in range(2, tate-2, 2):
-        for x in range(2, yoko-2, 2):
-            maze_lst[y][x] = 1
-    for y in range(2, tate-2, 2):
-        for x in range(2, yoko-2, 2):
-            if x > 2: rnd = rd.randint(0, 2)
-            else:     rnd = rd.randint(0, 3)
-            maze_lst[y+YP[rnd]][x+XP[rnd]] = 1
-
-    return maze_lst
-
-def show_maze(canvas, maze_lst):
-    color = ["white", "gray"]
-    for y in range(len(maze_lst)):
-        for x in range(len(maze_lst[y])):
-            canvas.create_rectangle(x*100, y*100, x*100+100, y*100+100, 
-                                    fill=color[maze_lst[y][x]])
 
 # %%
 class Bird:
