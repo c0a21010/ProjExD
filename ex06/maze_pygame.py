@@ -113,14 +113,6 @@ class Bird:
             self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
         else:
             self.xy = tmp
-
-        if self.xy == complex(self.scr.goal_pos[0],self.scr.goal_pos[1]):
-            self.scr.reset_maze()
-            stage_count += 1
-            
-            self.xy = 1+1j
-            self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
-        # 練習7
         
         scr.sfc.blit(self.sfc,self.rct)
 
@@ -214,7 +206,22 @@ class main():
                 if kkt.rct.colliderect(b.rct):
                     self.game_over()
                     return
-
+            
+            if kkt.xy == complex(self.scr.goal_pos[0],self.scr.goal_pos[1]):
+                self.scr.reset_maze()
+                counter = 0
+                stage_count+=1
+                txt.update(stage_count)
+                for i in range(len(brs)-1,-1,-1):
+                    # print(i)
+                    if i == 0:
+                        brs[i].xy = complex(self.scr.goal_pos[0],self.scr.goal_pos[1])
+                        brs[i].rct.center = (int(brs[i].xy.real)*brs[i].tile_size+(brs[i].tile_size//2),int(brs[i].xy.imag)*brs[i].tile_size+(brs[i].tile_size//2))
+                    else:
+                        brs.pop(-1)
+                        i -= 1
+                kkt.xy = 1+1j
+                kkt.rct.center = (int(kkt.xy.real)*kkt.tile_size+(kkt.tile_size//2),int(kkt.xy.imag)*kkt.tile_size+(kkt.tile_size//2))
 
             # イベント処理部
             for event in pg.event.get():
