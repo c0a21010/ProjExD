@@ -2,11 +2,11 @@
 import pygame as pg
 import sys
 import random as rd
-
-from sympy import intervals
+import maze_maker
 
 kuma_dia=0.125 #くまの倍率
 tori_dia=1.5 #鳥の倍率
+
 # %%
 class Screen:
 
@@ -27,6 +27,7 @@ class Screen:
         self.floor_color = (216,208,104)
 
         self.goal_color = (255,0,0)
+        
         self.maze_map = self.make_maze(self.x,self.y)
         self.goal_pos = self.goal_p() #ゴール座標をランダム設定
         print(self.goal_pos)
@@ -56,30 +57,6 @@ class Screen:
             color=self.goal_color,
             rect=((self.goal_pos[0])*(self.tile_length+1),(self.goal_pos[1])*(self.tile_length+1),(self.tile_length-1),(self.tile_length-1)),
             width=0)
-
-    def make_maze(self,yoko, tate):
-        XP = [ 0, 1, 0, -1]
-        YP = [-1, 0, 1,  0]
-
-        maze_lst = []
-        for y in range(tate):
-            maze_lst.append([0]*yoko)
-        for x in range(yoko):
-            maze_lst[0][x] = 1
-            maze_lst[tate-1][x] = 1
-        for y in range(1, tate-1):
-            maze_lst[y][0] = 1
-            maze_lst[y][yoko-1] = 1
-        for y in range(2, tate-2, 2):
-            for x in range(2, yoko-2, 2):
-                maze_lst[y][x] = 1
-        for y in range(2, tate-2, 2):
-            for x in range(2, yoko-2, 2):
-                if x > 2: rnd = rd.randint(0, 2)
-                else:     rnd = rd.randint(0, 3)
-                maze_lst[y+YP[rnd]][x+XP[rnd]] = 1
-
-        return maze_lst
     
     def goal_p(self):
         height = len(self.maze_map) #高さを取得
@@ -99,42 +76,10 @@ class Screen:
                     y = i
         x = len(self.maze_map[-2])-2 #x座標を設定
         return(x, y) #設定した座標を返す
-
+  
     def reset_maze(self):
-        self.maze_map = self.make_maze(self.x,self.y)
+        self.maze_map = maze_maker.make_maze(self.x,self.y)
         self.goal_pos = self.goal_p()
-
-# %%
-def make_maze(yoko, tate):
-    XP = [ 0, 1, 0, -1]
-    YP = [-1, 0, 1,  0]
-
-    maze_lst = []
-    for y in range(tate):
-        maze_lst.append([0]*yoko)
-    for x in range(yoko):
-        maze_lst[0][x] = 1
-        maze_lst[tate-1][x] = 1
-    for y in range(1, tate-1):
-        maze_lst[y][0] = 1
-        maze_lst[y][yoko-1] = 1
-    for y in range(2, tate-2, 2):
-        for x in range(2, yoko-2, 2):
-            maze_lst[y][x] = 1
-    for y in range(2, tate-2, 2):
-        for x in range(2, yoko-2, 2):
-            if x > 2: rnd = rd.randint(0, 2)
-            else:     rnd = rd.randint(0, 3)
-            maze_lst[y+YP[rnd]][x+XP[rnd]] = 1
-
-    return maze_lst
-
-def show_maze(canvas, maze_lst):
-    color = ["white", "gray"]
-    for y in range(len(maze_lst)):
-        for x in range(len(maze_lst[y])):
-            canvas.create_rectangle(x*100, y*100, x*100+100, y*100+100, 
-                                    fill=color[maze_lst[y][x]])
 
 # %%
 class Bird:
@@ -280,9 +225,11 @@ class main():
             for event in pg.event.get():
                 if event.type == pg.QUIT:  # 終了イベント
                     running = False
-                    # pg.quit()  #pygameのウィンドウを閉じる
-                    # sys.exit() #システム終了        
-                    return    
+                    pg.quit()  #pygameのウィンドウを閉じる
+                    sys.exit() #システム終了    
+                    return
+                if event.type == pg.KEYDOWN and event.key == pg.K_r:
+                    main()   
 
             pg.display.update() #描画処理を実行
             counter += 1
@@ -301,7 +248,6 @@ class main():
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     return
-
 
 # %%
 if __name__ == '__main__':
