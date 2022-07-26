@@ -1,3 +1,4 @@
+# %%
 import pygame as pg
 import sys
 import random as rd
