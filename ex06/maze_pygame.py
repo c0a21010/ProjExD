@@ -28,9 +28,8 @@ class Screen:
 
         self.goal_color = (255,0,0)
         
-        self.maze_map = self.make_maze(self.x,self.y)
+        self.maze_map = maze_maker.make_maze(self.x,self.y)
         self.goal_pos = self.goal_p() #ゴール座標をランダム設定
-        print(self.goal_pos)
 
     def draw_map(self):
         self.sfc.fill(self.floor_color)
@@ -51,7 +50,7 @@ class Screen:
             color=self.start_color,
             rect=(1*(self.tile_length+1),1*(self.tile_length+1),(self.tile_length-1),(self.tile_length-1)),
             width=0)
-        print(self.goal_pos[0]*self.tile_length+1)
+        #print(self.goal_pos[0]*self.tile_length+1)
         pg.draw.rect(
             surface=self.sfc,
             color=self.goal_color,
@@ -96,6 +95,7 @@ class Bird:
         self.rct.center = (int(self.xy.real)*self.tile_size+(self.rct.size[0]//2),int(self.xy.imag)*self.tile_size+(self.rct.size[1]//2))
 
     def update(self, scr):
+        global stage_count
         tmp = self.xy
         key_states = pg.key.get_pressed()  # 辞書
         if key_states[pg.K_UP]:
@@ -118,6 +118,7 @@ class Bird:
 
         if self.xy == complex(self.scr.goal_pos[0],self.scr.goal_pos[1]):
             self.scr.reset_maze()
+            stage_count += 1
             self.xy = 1+1j
             self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
         # 練習7
@@ -204,6 +205,8 @@ class main():
 
         while running:
             # ここにコードを書く
+            print(stage_count)
+
             if counter > 500:
                 brs.append(Bear("ex06/animal_kowai_kuma.png",kuma_dia,self.scr))
                 counter = 0
