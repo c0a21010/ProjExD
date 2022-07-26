@@ -125,9 +125,6 @@ class Bird:
         scr.sfc.blit(self.sfc,self.rct)
 
 # %%
-from random import randint
-
-
 class Bear(Bird):
     def __init__(self, image, size, scr):
         super().__init__(image, size, scr)
