@@ -95,7 +95,8 @@ class Bird:
         self.xy = 1+1j
         self.rct.center = (int(self.xy.real)*self.tile_size+(self.rct.size[0]//2),int(self.xy.imag)*self.tile_size+(self.rct.size[1]//2))
 
-    def update(self, scr):
+    def update(self, scr, txt=None):
+        global stage_count
         tmp = self.xy
         key_states = pg.key.get_pressed()  # 辞書
         if key_states[pg.K_UP]:
@@ -118,6 +119,7 @@ class Bird:
 
         if self.xy == complex(self.scr.goal_pos[0],self.scr.goal_pos[1]):
             self.scr.reset_maze()
+            stage_count+=1
             self.xy = 1+1j
             self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
         # 練習7
@@ -186,6 +188,10 @@ class Text: #重兼修正
     
     def blit(self, base_obj:Screen):
         base_obj.sfc.blit(self.sfc, self.rct)
+       
+    def update(self, content):        
+        font = pg.font.Font(None, 60)
+        self.sfc = font.render(str(content), True, (255,0,0))
 
 # %%
 class main():
@@ -210,7 +216,7 @@ class main():
 
             self.scr.draw_map()
             txt.blit(self.scr)
-            kkt.update(self.scr)
+            kkt.update(self.scr, txt)
             """ brs[0].update(scr) """
             for b in brs:
                 b.update(self.scr)
