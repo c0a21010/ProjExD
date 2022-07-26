@@ -89,30 +89,30 @@ class Bird:
         self.scr = scr
         self.tile_size = self.scr.tile_length
 
-        self.xy = 1+1j
-        self.rct.center = (int(self.xy.real)*self.tile_size+(self.rct.size[0]//2),int(self.xy.imag)*self.tile_size+(self.rct.size[1]//2))
+        self.xy = [1,1]
+        self.rct.center = (int(self.xy[0])*self.tile_size+(self.rct.size[0]//2),int(self.xy[1])*self.tile_size+(self.rct.size[1]//2))
 
     def update(self, scr, txt=None):
         global stage_count
-        tmp = self.xy
+        tmp = [v for v in self.xy]
         key_states = pg.key.get_pressed()  # 辞書
         if key_states[pg.K_UP]:
             """ self.rct.centery -= 1 """
-            self.xy -= 1j
+            self.xy[1] -= 1
         if key_states[pg.K_DOWN]:
             """ self.rct.centery += 1 """
-            self.xy += 1j
+            self.xy[1] += 1
         if key_states[pg.K_LEFT]:
             """ self.rct.centerx -= 1 """
-            self.xy -= 1
+            self.xy[0] -= 1
         if key_states[pg.K_RIGHT]:
             """ self.rct.centerx += 1 """
-            self.xy += 1
+            self.xy[0] += 1
 
-        if scr.maze_map[int(self.xy.imag)][int(self.xy.real)] != 1:
-            self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
+        if scr.maze_map[int(self.xy[1])][int(self.xy[0])] != 1:
+            self.rct.center = (int(self.xy[0])*self.tile_size+(self.tile_size//2),int(self.xy[1])*self.tile_size+(self.tile_size//2))
         else:
-            self.xy = tmp
+            self.xy[0], self.xy[1] = tmp[0], tmp[1]
         
         scr.sfc.blit(self.sfc,self.rct)
 
@@ -120,25 +120,28 @@ class Bird:
 class Bear(Bird):
     def __init__(self, image, size, scr):
         super().__init__(image, size, scr)
-        self.xy = complex(self.scr.goal_pos[0],self.scr.goal_pos[1])
-        self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
+
+        self.xy = [self.scr.goal_pos[0],self.scr.goal_pos[1]]
+
+        self.rct.center = (int(self.xy[0])*self.tile_size+(self.tile_size//2),int(self.xy[1])*self.tile_size+(self.tile_size//2))
         self.now_dir = 0
         self.count = 0
         self.interval = 5
 
     def update(self, scr:Screen):
-        tmp = self.xy
+        tmp = [v for v in self.xy]
         # クマの行動
         self.count += 1 #重兼修正 左手法実装
         if self.count > self.interval: #既定の間隔で
-            self.now_dir, xy_real, xy_imag = self.search_left(scr.maze_map) 
-            self.xy = complex(xy_real,xy_imag) #くまを動かす
+            self.now_dir, xy_real, xy_imag = self.search_left(scr.maze_map)
+
+            self.xy[0],self.xy[1] = xy_real,xy_imag #くまを動かす
             self.count = 0
             # 以下は同様
-            if scr.maze_map[int(self.xy.imag)][int(self.xy.real)] != 1:
-                self.rct.center = (int(self.xy.real)*self.tile_size+(self.tile_size//2),int(self.xy.imag)*self.tile_size+(self.tile_size//2))
+            if scr.maze_map[int(self.xy[1])][int(self.xy[0])] != 1:
+                self.rct.center = (int(self.xy[0])*self.tile_size+(self.tile_size//2),int(self.xy[1])*self.tile_size+(self.tile_size//2))
             else:
-                self.xy = tmp
+                self.xy[0],self.xy[1] = tmp[0],tmp[1]
         scr.sfc.blit(self.sfc,self.rct)
 
     def search_left(self, maze_map):#重兼追加 左手法実装
@@ -207,7 +210,7 @@ class main():
                     self.game_over()
                     return
             
-            if kkt.xy == complex(self.scr.goal_pos[0],self.scr.goal_pos[1]):
+            if kkt.xy[0] == self.scr.goal_pos[0] and kkt.xy[1] == self.scr.goal_pos[1]:
                 self.scr.reset_maze()
                 counter = 0
                 stage_count+=1
@@ -215,13 +218,17 @@ class main():
                 for i in range(len(brs)-1,-1,-1):
                     # print(i)
                     if i == 0:
-                        brs[i].xy = complex(self.scr.goal_pos[0],self.scr.goal_pos[1])
-                        brs[i].rct.center = (int(brs[i].xy.real)*brs[i].tile_size+(brs[i].tile_size//2),int(brs[i].xy.imag)*brs[i].tile_size+(brs[i].tile_size//2))
+                        brs[i].xy[0] = self.scr.goal_pos[0]
+                        brs[i].xy[1] = self.scr.goal_pos[1]
+
+
+                        brs[i].rct.center = (int(brs[i].xy[0])*brs[i].tile_size+(brs[i].tile_size//2),int(brs[i].xy[1])*brs[i].tile_size+(brs[i].tile_size//2))
                     else:
                         brs.pop(-1)
                         i -= 1
-                kkt.xy = 1+1j
-                kkt.rct.center = (int(kkt.xy.real)*kkt.tile_size+(kkt.tile_size//2),int(kkt.xy.imag)*kkt.tile_size+(kkt.tile_size//2))
+                kkt.xy[0] = 1
+                kkt.xy[1] = 1
+                kkt.rct.center = (int(kkt.xy[0])*kkt.tile_size+(kkt.tile_size//2),int(kkt.xy[1])*kkt.tile_size+(kkt.tile_size//2))
 
             # イベント処理部
             for event in pg.event.get():
