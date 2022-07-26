@@ -239,7 +239,8 @@ def main():
                 running = False
                 pg.quit()  #pygameのウィンドウを閉じる
                 sys.exit() #システム終了            
-
+            if event.type == pg.KEYDOWN and event.key == pg.K_r:
+                main()
         pg.display.update() #描画処理を実行
         counter += 1
         clock.tick(10)
